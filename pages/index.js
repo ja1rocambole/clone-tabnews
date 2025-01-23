@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 function Home() {
     return (
         <>
@@ -8,9 +10,14 @@ function Home() {
             <p>
                 Com amor seu nego❤️
             </p>
-                </>
+            <h1>Com img:</h1>
+            <img src="/dandadan.jpg" alt="Descrição da imagem" />
 
-        
+            <h1>Com img:</h1>
+            <Image src="/dandadan.jpg" alt="Descrição da imagem" width={500} height={300} />
+        </>
+
+
     )
 }
 
