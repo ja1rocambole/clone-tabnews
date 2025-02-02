@@ -1,2 +1,3 @@
 # clone-tabnews
-Um lugar onde espero sofrer uma transformação como profissional 
+
+Um lugar onde espero sofrer uma transformação como profissional
