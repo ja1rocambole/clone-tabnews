@@ -1,32 +1,27 @@
-import Image from "next/image";
+export default function Home() {
+  const containerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "97vh",
+    fontFamily: "'Arial Black', sans-serif",
+    backgroundColor: "#222",
+    borderRadius: "8px",
+  };
 
-function teste(params) {
-  console.log("");
-}
+  const titleStyle = {
+    color: "#FFC107",
+    fontSize: "2rem",
+    padding: "10px 20px",
+    border: "5px solid #FFC107",
+    borderRadius: "8px",
+    boxShadow: "0 0 15px rgba(255, 193, 7, 0.8)",
+    outline: "none",
+  };
 
-function Home() {
   return (
-    <>
-      <h1>Pedaço de internet que dedico a você</h1>
-      <p>
-        Eu quero apenas dizer que você é uma grande inspiração. Quando eu lhe
-        observo e vejo a pessoa incrível que você é, sinto vontade de ser alguém
-        melhor também. Só tenho a agradecer por ter você na minha vida. Te amo,
-        meu cherinho!
-      </p>
-      <p>Com amor seu nego❤️</p>
-      <h1>Com img:</h1>
-      <img src="/dandadan.jpg" alt="Descrição da imagem" />
-
-      <h1>Com img:</h1>
-      <Image
-        src="/dandadan.jpg"
-        alt="Descrição da imagem"
-        width={500}
-        height={300}
-      />
-    </>
+    <div style={containerStyle}>
+      <h1 style={titleStyle}>🚧 EM CONSTRUÇÃO 🚧</h1>
+    </div>
   );
 }
-
-export default Home;
