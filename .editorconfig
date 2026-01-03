@@ -1,0 +1,7 @@
+# root significa que esse é o arquivo editorconfig raiz podendo ter arquivo filhos que dizem como outros diretorios vão se comportar
+root = true
+# os cochetes dizem para quais tipos de arquivo essa regra vale no caso para todos no lugar poderia ser um [.js] ou qualquer outra extensão
+[*]
+# as duas variaves a baixo são as regras de indentação
+indent_style = space
+indent_size = 2
