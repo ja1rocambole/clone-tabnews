@@ -1,5 +1,7 @@
 import { Client } from "pg";
 
+console.log("mudança pra testar o deploy da preview");
+
 async function query(queryObject) {
   let client;
 
