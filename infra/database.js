@@ -1,12 +1,10 @@
 import { Client } from "pg";
 
-console.log("mudança pra testar o deploy da preview");
-
 async function query(queryObject) {
   let client;
 
   try {
-    client = await getClient();
+    client = await getNewClient();
     const result = await client.query(queryObject);
     return result;
   } catch (error) {
@@ -17,7 +15,7 @@ async function query(queryObject) {
   }
 }
 
-async function getClient() {
+async function getNewClient() {
   const client = new Client({
     host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT,
@@ -33,7 +31,7 @@ async function getClient() {
 
 export default {
   query,
-  getClient,
+  getNewClient,
 };
 
 function getSSLValues() {
