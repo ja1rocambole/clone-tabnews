@@ -1,8 +1,9 @@
 import retry from "async-retry";
+import { faker } from "@faker-js/faker";
 import database from "infra/database.js";
 import migrator from "models/migrator.js";
 import user from "models/user.js";
-import { faker } from "@faker-js/faker";
+import session from "models/session.js";
 
 async function waitForAllServices() {
   await waitForWebServer();
@@ -40,11 +41,16 @@ async function createUsers(userObject) {
   });
 }
 
+async function createSession(userId) {
+  return await session.create(userId);
+}
+
 const orchestrator = {
   waitForAllServices,
   clearDatabase,
   runPendingMigrations,
   createUsers,
+  createSession,
 };
 
 export default orchestrator;

@@ -2,12 +2,12 @@ import database from "infra/database.js";
 import password from "models/password.js";
 import { ValidationError, NotFoundError } from "infra/errors.js";
 
-async function findOneByEmail(email) {
-  const userFound = await runSelectQuery(email);
+async function findOneById(id) {
+  const userFound = await runSelectQuery(id);
 
   return userFound;
 
-  async function runSelectQuery(email) {
+  async function runSelectQuery(id) {
     const results = await database.query({
       text: `
         SELECT
@@ -15,23 +15,24 @@ async function findOneByEmail(email) {
         FROM
           users
         WHERE
-          LOWER(email) = LOWER($1)
+          id = $1
         LIMIT
           1
         ;`,
-      values: [email],
+      values: [id],
     });
 
     if (results.rowCount === 0) {
       throw new NotFoundError({
-        message: "O email informado não foi encontrado no sistema.",
-        action: "Verifique se 'email' foi digitado correatamente.",
+        message: "O id informado não foi encontrado no sistema.",
+        action: "Verifique se 'id' foi digitado correatamente.",
       });
     }
 
     return results.rows[0];
   }
 }
+
 async function findOneByUsername(username) {
   const userFound = await runSelectQuery(username);
 
@@ -56,6 +57,37 @@ async function findOneByUsername(username) {
       throw new NotFoundError({
         message: "O username informado não foi encontrado no sistema.",
         action: "Verifique se 'username' foi digitado correatamente.",
+      });
+    }
+
+    return results.rows[0];
+  }
+}
+
+async function findOneByEmail(email) {
+  const userFound = await runSelectQuery(email);
+
+  return userFound;
+
+  async function runSelectQuery(email) {
+    const results = await database.query({
+      text: `
+        SELECT
+          *
+        FROM
+          users
+        WHERE
+          LOWER(email) = LOWER($1)
+        LIMIT
+          1
+        ;`,
+      values: [email],
+    });
+
+    if (results.rowCount === 0) {
+      throw new NotFoundError({
+        message: "O email informado não foi encontrado no sistema.",
+        action: "Verifique se 'email' foi digitado correatamente.",
       });
     }
 
@@ -186,9 +218,10 @@ async function hashPasswordInObject(userInputValues) {
 }
 
 const user = {
-  create,
-  findOneByEmail,
+  findOneById,
   findOneByUsername,
+  findOneByEmail,
+  create,
   update,
 };
 
