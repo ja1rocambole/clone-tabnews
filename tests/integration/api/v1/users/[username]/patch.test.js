@@ -30,11 +30,11 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
 
     test("With duplicate 'username'", async () => {
-      await orchestrator.createUsers({
+      await orchestrator.createUser({
         username: "user1",
       });
 
-      await orchestrator.createUsers({
+      await orchestrator.createUser({
         username: "user2",
       });
 
@@ -61,11 +61,11 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
 
     test("With duplicate 'email'", async () => {
-      await orchestrator.createUsers({
+      await orchestrator.createUser({
         email: "email1@email.com",
       });
 
-      const createUser2 = await orchestrator.createUsers({
+      const createUser2 = await orchestrator.createUser({
         email: "email2@email.com",
       });
 
@@ -95,7 +95,7 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
 
     test("With unique 'username'", async () => {
-      const uniqueUser = await orchestrator.createUsers({
+      const uniqueUser = await orchestrator.createUser({
         username: "uniqueUser1",
       });
 
@@ -129,7 +129,7 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
 
     test("With new 'password'", async () => {
-      const userNewPassword = await orchestrator.createUsers({
+      const userNewPassword = await orchestrator.createUser({
         password: "newPassword1",
       });
 
