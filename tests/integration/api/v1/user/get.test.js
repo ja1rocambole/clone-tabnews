@@ -12,7 +12,7 @@ beforeAll(async () => {
 describe("GET /api/v1/user", () => {
   describe("Default user", () => {
     test("With valid session", async () => {
-      const createdUser = await orchestrator.createUsers({
+      const createdUser = await orchestrator.createUser({
         username: "UserValidSession",
       });
 
@@ -73,7 +73,7 @@ describe("GET /api/v1/user", () => {
         now: new Date(Date.now() - session.EXPIRATION_IN_MILLISECONDS / 2),
       });
 
-      const createdUser = await orchestrator.createUsers({
+      const createdUser = await orchestrator.createUser({
         username: "UserWithHalfwayExpiredSession",
       });
 
@@ -132,7 +132,7 @@ describe("GET /api/v1/user", () => {
         now: new Date(Date.now() - session.EXPIRATION_IN_MILLISECONDS),
       });
 
-      const createdUser = await orchestrator.createUsers({
+      const createdUser = await orchestrator.createUser({
         username: "UserWithExpiredSession",
       });
 
