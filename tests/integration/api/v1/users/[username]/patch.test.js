@@ -65,12 +65,12 @@ describe("PATCH /api/v1/users/[username]", () => {
         email: "email1@email.com",
       });
 
-      const createUser2 = await orchestrator.createUsers({
+      const createUsers2 = await orchestrator.createUsers({
         email: "email2@email.com",
       });
 
       const response = await fetch(
-        `http://localhost:3000/api/v1/users/${createUser2.username}`,
+        `http://localhost:3000/api/v1/users/${createUsers2.username}`,
         {
           method: "PATCH",
           headers: {
