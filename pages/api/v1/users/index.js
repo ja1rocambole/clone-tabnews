@@ -14,11 +14,9 @@ export default router.handler(controller.errorHandler);
 async function postHandler(request, response) {
   const userInputValues = request.body;
   const userTryingToPost = request.context.user;
-
   const newUser = await user.create(userInputValues);
 
   const activationToken = await activation.create(newUser.id);
-
   await activation.sendEmailToUser(newUser, activationToken);
 
   const secureOutputValues = authorization.filterOutput(
