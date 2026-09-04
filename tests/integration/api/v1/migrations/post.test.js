@@ -3,33 +3,73 @@ import orchestrator from "tests/orchestrator.js";
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
   await orchestrator.clearDatabase();
+  await orchestrator.runPendingMigrations();
 });
 
 describe("POST /api/v1/migrations", () => {
   describe("Anonymous user", () => {
-    describe("Running pending migrations", () => {
-      test("For first time", async () => {
-        const res1 = await fetch("http://localhost:3000/api/v1/migrations", {
-          method: "POST",
-        });
-        expect(res1.status).toBe(201);
-
-        const res1Body = await res1.json();
-
-        expect(Array.isArray(res1Body)).toBe(true);
-        expect(res1Body.length).toBeGreaterThan(0);
+    test("Retrieving pending migrations", async () => {
+      const response = await fetch("http://localhost:3000/api/v1/migrations", {
+        method: "POST",
       });
-      test("For second time", async () => {
-        const res2 = await fetch("http://localhost:3000/api/v1/migrations", {
-          method: "POST",
-        });
-        expect(res2.status).toBe(200);
+      expect(response.status).toBe(403);
 
-        const res2Body = await res2.json();
+      const responseBody = await response.json();
 
-        expect(Array.isArray(res2Body)).toBe(true);
-        expect(res2Body.length).toBe(0);
+      expect(responseBody).toEqual({
+        name: "ForbiddenError",
+        message: "Você não possui permissão para executar esta ação.",
+        action:
+          'Verifique se o seu usuário possui a feature "create:migration".',
+        status_code: 403,
       });
+    });
+  });
+
+  describe("Default user", () => {
+    test("Retrieving pending migrations", async () => {
+      const createdUser = await orchestrator.createUser();
+      const activatedUser = await orchestrator.activateUser(createdUser);
+      const sessionObject = await orchestrator.createSession(activatedUser.id);
+
+      const response = await fetch("http://localhost:3000/api/v1/migrations", {
+        method: "POST",
+        headers: {
+          Cookie: `session_id=${sessionObject.token}`,
+        },
+      });
+      expect(response.status).toBe(403);
+
+      const responseBody = await response.json();
+
+      expect(responseBody).toEqual({
+        name: "ForbiddenError",
+        message: "Você não possui permissão para executar esta ação.",
+        action:
+          'Verifique se o seu usuário possui a feature "create:migration".',
+        status_code: 403,
+      });
+    });
+  });
+
+  describe("Privileged user", () => {
+    test("Retrieving pending migrations", async () => {
+      const createdUser = await orchestrator.createUser();
+      const activatedUser = await orchestrator.activateUser(createdUser);
+      await orchestrator.addFeaturesToUser(createdUser, ["create:migration"]);
+      const sessionObject = await orchestrator.createSession(activatedUser.id);
+
+      const response = await fetch("http://localhost:3000/api/v1/migrations", {
+        method: "POST",
+        headers: {
+          Cookie: `session_id=${sessionObject.token}`,
+        },
+      });
+      expect(response.status).toBe(200);
+
+      const responseBody = await response.json();
+
+      expect(Array.isArray(responseBody)).toBe(true);
     });
   });
 });
