@@ -7,11 +7,11 @@ function getOrigin() {
     return `htts://${process.env.VERCEL_URL}`;
   }
 
-  return "https://localhost.com.br";
+  return "https://joaofernandes.dev.br";
 }
 
 const webserver = {
-  getOrigin,
+  origin: getOrigin(),
 };
 
 export default webserver;
