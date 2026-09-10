@@ -70,7 +70,7 @@ async function sendEmailToUser(user, activationToken) {
     subject: "Ative seu cadastro no CloneTabNews!",
     text: `${user.username}, clique no link abaixo para ativar seu cadastro no CloneabNews:
 
-${webserver.getOrigin()}/cadastro/ativar/${activationToken.id}
+${webserver.origin}/cadastro/ativar/${activationToken.id}
 `,
   });
 }
